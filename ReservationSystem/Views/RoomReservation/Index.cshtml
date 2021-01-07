@@ -1,0 +1,109 @@
+﻿<!-- pageheader -->
+<div class="row">
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+        <div class="page-header">
+            <h2 class="pageheader-title">預約登記</h2>
+            <div class="page-breadcrumb">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="index.html" class="breadcrumb-link">首頁</a></li>
+                        <li class="breadcrumb-item"><a href="index.html" class="breadcrumb-link">預約管理</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">預約登記</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /pageheader -->
+<div class="row">
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+        <div class="card">
+            <h5 class="card-header">預約登記</h5>
+            <div class="card-body">
+                <form class="needs-validation" novalidate="">
+                    <div class="mb-3 row">
+                        <div class="col-md-6 mb-3">
+                            <label for="IDnumber">預約地點</label>
+                            <select class="form-control">
+                                <optgroup label="RA-1">
+                                    <option>101</option>
+                                    <option>102</option>
+                                    <option>103</option>
+                                    <option>104</option>
+                                </optgroup>
+                                <optgroup label="RA-2">
+                                    <option>201</option>
+                                    <option>202</option>
+                                </optgroup>
+                            </select>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="date-picker">預約日期</label>
+                            <div class="form-group">
+                                <div class="input-group date" id="date-picker" data-target-input="nearest">
+                                    <input type="text" class="form-control datetimepicker-input" data-target="#date-picker" />
+                                    <div class="input-group-append" data-target="#date-picker" data-toggle="datetimepicker">
+                                        <div class="input-group-text"><i class="far fa-calendar-alt"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <div class="col-md-6 mb-3">
+                            <label for="begin-time-picker">開始時間</label>
+                            <div class="form-group">
+                                <div class="input-group date" id="begin-time-picker" data-target-input="nearest">
+                                    <input type="text" class="form-control datetimepicker-input" data-target="#begin-time-picker" />
+                                    <div class="input-group-append" data-target="#begin-time-picker" data-toggle="datetimepicker">
+                                        <div class="input-group-text"><i class="far fa-clock"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="end-time-picker">結束時間</label>
+                            <div class="form-group">
+                                <div class="input-group date" id="end-time-picker" data-target-input="nearest">
+                                    <input type="text" class="form-control datetimepicker-input" data-target="#end-time-picker" />
+                                    <div class="input-group-append" data-target="#end-time-picker" data-toggle="datetimepicker">
+                                        <div class="input-group-text"><i class="far fa-clock"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--        <div class="mb-3">
+                                <label for="username">申請人</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"></span>
+                                    </div>
+                                    <input type="text" class="form-control" id="username" placeholder="Username" required="">
+                                    <div class="invalid-feedback" style="width: 100%;">
+                                        Your username is required.
+                                    </div>
+                                </div>
+                            </div>-->
+                    <div class="mb-3">
+                        <label for="people-number">預計會議人數</label>
+                        <input type="number" class="form-control" id="people-number" required="">
+                        <div class="invalid-feedback">
+                            請輸入預計人數。
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="meeting-goal">會議目的</label>
+                        <input type="text" class="form-control" id="meeting-goal" required="">
+                        <div class="invalid-feedback">
+                            請輸入會議目的。
+                        </div>
+                    </div>
+                    <hr class="mb-4">
+                    <button class="btn btn-primary btn-lg btn-block" type="submit">登記</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

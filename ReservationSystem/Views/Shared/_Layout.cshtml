@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html>
+<html lang="zh_tw">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link href="~/Content/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/Content/assets/vendor/fonts/circular-std/style.css" rel="stylesheet">
+    <link href="~/Content/assets/libs/css/style.css"rel="stylesheet">
+    <link href="~/Content/assets/vendor/fonts/fontawesome/css/fontawesome-all.css"rel="stylesheet">
+    <link href="~/Content/assets/vendor/charts/chartist-bundle/chartist.css"rel="stylesheet">
+    <link href="~/Content/assets/vendor/charts/morris-bundle/morris.css"rel="stylesheet">
+    <link href="~/Content/assets/vendor/fonts/material-design-iconic-font/css/materialdesignicons.min.css"rel="stylesheet">
+    <link href="~/Content/assets/vendor/charts/c3charts/c3.css"rel="stylesheet">
+    <link href="~/Content/assets/vendor/fonts/flag-icon-css/flag-icon.min.css"rel="stylesheet">
+    <title>約會(議室)系統</title>
+</head>
+<body>
+    <!-- top navigation -->
+    <div class="dashboard-header">
+        @Html.Partial("_NavBar")
+    </div>
+    <!-- /top navigation -->
+    <!-- sidebar menu -->
+    <div class="nav-left-sidebar sidebar-dark">
+        <div class="menu-list">
+            @Html.Partial("_SideBar")
+        </div>
+    </div>
+    <!-- /sidebar menu -->
+    <!-- wrapper  -->
+    <div class="dashboard-wrapper">
+        <div class="container-fluid  dashboard-content">
+            @RenderBody()
+        </div>
+    </div>
+    <!-- /wrapper  -->
+
+    <!-- Optional JavaScript -->
+    <!-- jquery 3.3.1 -->
+    <script src="~/Content/assets/vendor/jquery/jquery-3.3.1.min.js"></script>
+    <!-- bootstap bundle js -->
+    <script src="~/Content/assets/vendor/bootstrap/js/bootstrap.bundle.js"></script>
+    <!-- slimscroll js -->
+    <script src="~/Content/assets/vendor/slimscroll/jquery.slimscroll.js"></script>
+    <!-- main js -->
+    <script src="~/Content/assets/libs/js/main-js.js"></script>
+    <!-- chart chartist js -->
+    <script src="~/Content/assets/vendor/charts/chartist-bundle/chartist.min.js"></script>
+    <!-- sparkline js -->
+    <script src="~/Content/assets/vendor/charts/sparkline/jquery.sparkline.js"></script>
+    <!-- morris js -->
+    <script src="~/Content/assets/vendor/charts/morris-bundle/raphael.min.js"></script>
+    <script src="~/Content/assets/vendor/charts/morris-bundle/morris.js"></script>
+    <!-- chart c3 js -->
+    <script src="~/Content/assets/vendor/charts/c3charts/c3.min.js"></script>
+    <script src="~/Content/assets/vendor/charts/c3charts/d3-5.4.0.min.js"></script>
+    <script src="~/Content/assets/vendor/charts/c3charts/C3chartjs.js"></script>
+    <script src="~/Content/assets/libs/js/dashboard-ecommerce.js"></script>
+</body>
+</html>

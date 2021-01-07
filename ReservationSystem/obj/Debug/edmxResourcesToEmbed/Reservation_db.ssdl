@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ReservationDatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="MeetingRoom">
+    <Key>
+      <PropertyRef Name="Name" />
+    </Key>
+    <Property Name="Name" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="Position" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="LoadNumber" Type="int" />
+    <Property Name="Status" Type="varchar" MaxLength="10" />
+    <Property Name="Information" Type="varchar" MaxLength="100" />
+    <Property Name="Equipment" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Reservation">
+    <Key>
+      <PropertyRef Name="ReservingPersonID" />
+      <PropertyRef Name="RoomName" />
+      <PropertyRef Name="StartTime" />
+    </Key>
+    <Property Name="ReservingPersonID" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="RoomName" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="StartTime" Type="datetime" Nullable="false" />
+    <Property Name="EndTime" Type="datetime" Nullable="false" />
+    <Property Name="Number" Type="int" />
+    <Property Name="Goal" Type="varchar" MaxLength="100" />
+    <Property Name="Equipments" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="UserID" />
+    </Key>
+    <Property Name="UserID" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="Identity" Type="varchar" MaxLength="10" />
+    <Property Name="Account" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="Password" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="Authority" Type="varchar" MaxLength="10" />
+  </EntityType>
+  <Association Name="FK_Reservation_ToTable">
+    <End Role="MeetingRoom" Type="Self.MeetingRoom" Multiplicity="1" />
+    <End Role="Reservation" Type="Self.Reservation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MeetingRoom">
+        <PropertyRef Name="Name" />
+      </Principal>
+      <Dependent Role="Reservation">
+        <PropertyRef Name="RoomName" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Reservation_ToTable_1">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="Reservation" Type="Self.Reservation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="Reservation">
+        <PropertyRef Name="ReservingPersonID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ReservationDatabaseModelStoreContainer">
+    <EntitySet Name="MeetingRoom" EntityType="Self.MeetingRoom" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Reservation" EntityType="Self.Reservation" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Reservation_ToTable" Association="Self.FK_Reservation_ToTable">
+      <End Role="MeetingRoom" EntitySet="MeetingRoom" />
+      <End Role="Reservation" EntitySet="Reservation" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Reservation_ToTable_1" Association="Self.FK_Reservation_ToTable_1">
+      <End Role="User" EntitySet="User" />
+      <End Role="Reservation" EntitySet="Reservation" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
