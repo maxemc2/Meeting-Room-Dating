@@ -21,89 +21,135 @@
         <div class="card">
             <h5 class="card-header">預約登記</h5>
             <div class="card-body">
-                <form class="needs-validation" novalidate="">
+                <form id="queryForm" class="needs-validation">
                     <div class="mb-3 row">
                         <div class="col-md-6 mb-3">
-                            <label for="IDnumber">預約地點</label>
-                            <select class="form-control">
+                            <label for="RoomName">預約地點</label>
+                            <select class="form-control" id="RoomName" name="RoomName" required="">
                                 <optgroup label="RA-1">
-                                    <option>101</option>
-                                    <option>102</option>
-                                    <option>103</option>
-                                    <option>104</option>
+                                    <option>RA-101</option>
+                                    <option>RA-102</option>
+                                    <option>RA-103</option>
+                                    <option>RA-104</option>
                                 </optgroup>
                                 <optgroup label="RA-2">
-                                    <option>201</option>
-                                    <option>202</option>
+                                    <option>RA-201</option>
+                                    <option>RA-202</option>
                                 </optgroup>
                             </select>
                         </div>
                         <div class="col-md-6 mb-3">
-                            <label for="date-picker">預約日期</label>
+                            <label for="meetingDate">預約日期</label>
                             <div class="form-group">
-                                <div class="input-group date" id="date-picker" data-target-input="nearest">
-                                    <input type="text" class="form-control datetimepicker-input" data-target="#date-picker" />
-                                    <div class="input-group-append" data-target="#date-picker" data-toggle="datetimepicker">
-                                        <div class="input-group-text"><i class="far fa-calendar-alt"></i></div>
-                                    </div>
-                                </div>
+                                <input type="date" class="form-control datetimepicker-input" id="meetingDate" name="meetingDate" required="" />
                             </div>
                         </div>
                     </div>
                     <div class="mb-3 row">
                         <div class="col-md-6 mb-3">
-                            <label for="begin-time-picker">開始時間</label>
+                            <label for="startTime">開始時間</label>
                             <div class="form-group">
-                                <div class="input-group date" id="begin-time-picker" data-target-input="nearest">
-                                    <input type="text" class="form-control datetimepicker-input" data-target="#begin-time-picker" />
-                                    <div class="input-group-append" data-target="#begin-time-picker" data-toggle="datetimepicker">
-                                        <div class="input-group-text"><i class="far fa-clock"></i></div>
-                                    </div>
-                                </div>
+                                <input type="time" class="form-control datetimepicker-input" id="startTime" name="startTime" required=""/>
                             </div>
                         </div>
                         <div class="col-md-6 mb-3">
-                            <label for="end-time-picker">結束時間</label>
+                            <label for="endTime">結束時間</label>
                             <div class="form-group">
-                                <div class="input-group date" id="end-time-picker" data-target-input="nearest">
-                                    <input type="text" class="form-control datetimepicker-input" data-target="#end-time-picker" />
-                                    <div class="input-group-append" data-target="#end-time-picker" data-toggle="datetimepicker">
-                                        <div class="input-group-text"><i class="far fa-clock"></i></div>
-                                    </div>
-                                </div>
+                                <input type="time" class="form-control datetimepicker-input" id="endTime" name="endTime" required="" />
                             </div>
                         </div>
                     </div>
-                    <!--        <div class="mb-3">
-                                <label for="username">申請人</label>
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text"></span>
-                                    </div>
-                                    <input type="text" class="form-control" id="username" placeholder="Username" required="">
-                                    <div class="invalid-feedback" style="width: 100%;">
-                                        Your username is required.
-                                    </div>
-                                </div>
-                            </div>-->
                     <div class="mb-3">
-                        <label for="people-number">預計會議人數</label>
-                        <input type="number" class="form-control" id="people-number" required="">
+                        <label for="PeopleNumber">預計會議人數</label>
+                        <input type="number" class="form-control" id="PeopleNumber" name="PeopleNumber" required="" min="0" max="100" value="1">
                         <div class="invalid-feedback">
                             請輸入預計人數。
                         </div>
                     </div>
                     <div class="mb-3">
-                        <label for="meeting-goal">會議目的</label>
-                        <input type="text" class="form-control" id="meeting-goal" required="">
+                        <label for="Goal">會議目的</label>
+                        <input type="text" class="form-control" id="Goal" name="Goal" placeholder="請輸入會議目的">
                         <div class="invalid-feedback">
                             請輸入會議目的。
                         </div>
                     </div>
                     <hr class="mb-4">
-                    <button class="btn btn-primary btn-lg btn-block" type="submit">登記</button>
+                    <button type="button" class="btn btn-primary btn-lg btn-block" onclick="CheckFormStatus();">登記</button>
                 </form>
             </div>
         </div>
     </div>
 </div>
+
+@section scripts{
+    <script>
+        // 給input  date設定預設值
+        var now = new Date();
+        //格式化日，如果小於9，前面補0
+        var day = ("0" + now.getDate()).slice(-2);
+        //格式化月，如果小於9，前面補0
+        var month = ("0" + (now.getMonth() + 1)).slice(-2);
+        //拼裝完整日期格式
+        var today = now.getFullYear() + "-" + (month) + "-" + (day);
+        //完成賦值
+        $('#meetingDate').val(today);
+
+        //確認時段是否能預約
+        function CheckFormStatus() {
+            var formValues = $("#queryForm").serialize();
+            var strDate = $('#meetingDate').val();
+            var StartTime = new Date(strDate + " " + $('#startTime').val() + ":00");
+            var EndTime = new Date(strDate + " " + $('#endTime').val() + ":00");
+
+            $.ajax({
+                url: '@Url.Action("CheckObjStatus", "RoomReservation")',
+                data: formValues + '&StartTime=' + StartTime + '&EndTime=' + EndTime,
+                type: 'post',
+                success: function (data) {
+                    if (data) {
+                        alert("該時段已被預約!!");
+                    }
+                    else {
+                        InsertObj();
+                    }
+                },
+                fail: function () {
+                    alert("該時段已被預約!!");
+                },
+                error: function () {
+                    alert("該時段已被預約!!");
+                }
+            });
+            return false;
+        }
+
+        //預約明細
+        function InsertObj() {
+            var formValues = $("#queryForm").serialize();
+            var strDate = $('#meetingDate').val();
+            var StartTime = new Date(strDate + " " + $('#startTime').val() + ":00");
+            var EndTime = new Date(strDate + " " + $('#endTime').val() + ":00");
+
+            $.ajax({
+                url: '@Url.Action("InsertObj", "RoomReservation")',
+                data: formValues + '&StartTime=' + StartTime + '&EndTime=' + EndTime + '&ReservingPersonID=' + $("#NavUserID").val(),
+                type: 'post',
+                success: function (data) {
+                    if (data) {
+                        alert("預約成功!!");
+                    }
+                    else {
+                        alert("預約失敗!!");                        
+                    }
+                },
+                error: function () {
+                    alert("預約失敗!!");
+                },
+                fail: function () {
+                    alert("預約失敗!!");
+                }
+            });
+            return false;
+        }
+    </script>
+}

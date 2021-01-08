@@ -1,0 +1,60 @@
+﻿@model Meeting_room_dating.Reservation
+
+<h5 class="card-header">修改預約</h5>
+<div class="card-body">
+    <form id="updateForm" class="needs-validation">
+        <div class="mb-3 row">
+            <div class="col-md-6 mb-3">
+                <label for="RoomName">預約地點</label>
+                <select class="form-control" id="RoomName" name="RoomName" text="@Model.RoomName" required="">
+                    <optgroup label="RA-1">
+                        <option>RA-101</option>
+                        <option>RA-102</option>
+                        <option>RA-103</option>
+                        <option>RA-104</option>
+                    </optgroup>
+                    <optgroup label="RA-2">
+                        <option>RA-201</option>
+                        <option>RA-202</option>
+                    </optgroup>
+                </select>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="meetingDate">預約日期</label>
+                <div class="form-group">
+                    <input type="date" class="form-control datetimepicker-input" id="meetingDate" name="meetingDate" value="@Model.StartTime.ToString("d")" required="" />
+                </div>
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <div class="col-md-6 mb-3">
+                <label for="startTime">開始時間</label>
+                <div class="form-group">
+                    <input type="time" class="form-control datetimepicker-input" id="startTime" name="startTime" value="@Model.StartTime.ToString("t")" required="" />
+                </div>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="endTime">結束時間</label>
+                <div class="form-group">
+                    <input type="time" class="form-control datetimepicker-input" id="endTime" name="endTime" value="@Model.EndTime.ToString("t")" required="" />
+                </div>
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="PeopleNumber">預計會議人數</label>
+            <input type="number" class="form-control" id="PeopleNumber" name="PeopleNumber" value="@Model.PeopleNumber" required="" min="0" max="100" value="1">
+            <div class="invalid-feedback">
+                請輸入預計人數。
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="Goal">會議目的</label>
+            <input type="text" class="form-control" id="Goal" name="Goal" value="@Model.Goal" placeholder="請輸入會議目的">
+            <div class="invalid-feedback">
+                請輸入會議目的。
+            </div>
+        </div>
+        <hr class="mb-4">
+        <button type="button" class="btn btn-primary btn-lg btn-block" onclick="Check();">修改</button>
+    </form>
+</div>

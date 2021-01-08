@@ -142,37 +142,39 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="MeetingRoom.cs">
-      <DependentUpon>Reservation_db.tt</DependentUpon>
+      <DependentUpon>ReservationSystemEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\MeetingRoomModel.cs" />
     <Compile Include="Models\ReservationModel.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reservation.cs">
-      <DependentUpon>Reservation_db.tt</DependentUpon>
+      <DependentUpon>ReservationSystemEntity.tt</DependentUpon>
     </Compile>
-    <Compile Include="Reservation_db.Context.cs">
+    <Compile Include="ReservationSystemEntity.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Reservation_db.Context.tt</DependentUpon>
+      <DependentUpon>ReservationSystemEntity.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Reservation_db.cs">
+    <Compile Include="ReservationSystemEntity.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Reservation_db.tt</DependentUpon>
+      <DependentUpon>ReservationSystemEntity.tt</DependentUpon>
     </Compile>
-    <Compile Include="Reservation_db.Designer.cs">
+    <Compile Include="ReservationSystemEntity.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Reservation_db.edmx</DependentUpon>
+      <DependentUpon>ReservationSystemEntity.edmx</DependentUpon>
     </Compile>
     <Compile Include="Services\MeetingRoomService.cs" />
     <Compile Include="Services\ReservationService.cs" />
     <Compile Include="Services\UserService.cs" />
     <Compile Include="User.cs">
-      <DependentUpon>Reservation_db.tt</DependentUpon>
+      <DependentUpon>ReservationSystemEntity.tt</DependentUpon>
     </Compile>
-    <Compile Include="ViewModels\RoomSearchingViewModel.cs" />
+    <Compile Include="ViewModels\MeetingRoomViewModel.cs" />
+    <Compile Include="ViewModels\ReservationViewModel.cs" />
+    <Compile Include="ViewModels\UserViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\ReservationDatabase.mdf" />
@@ -187,24 +189,24 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Reservation_db.Context.tt">
+    <Content Include="ReservationSystemEntity.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Reservation_db.Context.cs</LastGenOutput>
-      <DependentUpon>Reservation_db.edmx</DependentUpon>
+      <DependentUpon>ReservationSystemEntity.edmx</DependentUpon>
+      <LastGenOutput>ReservationSystemEntity.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Reservation_db.tt">
+    <Content Include="ReservationSystemEntity.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Reservation_db.edmx</DependentUpon>
-      <LastGenOutput>Reservation_db.cs</LastGenOutput>
+      <DependentUpon>ReservationSystemEntity.edmx</DependentUpon>
+      <LastGenOutput>ReservationSystemEntity.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <EntityDeploy Include="Reservation_db.edmx">
+    <EntityDeploy Include="ReservationSystemEntity.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Reservation_db.Designer.cs</LastGenOutput>
+      <LastGenOutput>ReservationSystemEntity.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Reservation_db.edmx.diagram">
-      <DependentUpon>Reservation_db.edmx</DependentUpon>
+    <Content Include="ReservationSystemEntity.edmx.diagram">
+      <DependentUpon>ReservationSystemEntity.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
@@ -678,6 +680,8 @@
     <Content Include="Views\RoomReservation\Index.cshtml" />
     <Content Include="Views\RoomReservationLog\Index.cshtml" />
     <Content Include="Views\UserRegitration\Index.cshtml" />
+    <Content Include="Views\RoomReservationLog\ObjListPartialView.cshtml" />
+    <Content Include="Views\RoomReservationLog\UpdateObjPartialView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

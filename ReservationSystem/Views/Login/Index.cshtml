@@ -8,7 +8,7 @@
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="index.html" class="breadcrumb-link">首頁</a></li>
                         <li class="breadcrumb-item"><a href="index.html" class="breadcrumb-link">帳號管理</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">ˇ登入</li>
+                        <li class="breadcrumb-item active" aria-current="page">登入</li>
                     </ol>
                 </nav>
             </div>
@@ -22,24 +22,24 @@
         <div class="card">
             <div class="card-header text-center"><a class="navbar-brand" href="index.html">約會(議室)系統</a><span class="splash-description">歡迎使用本系統</span></div>
             <div class="card-body">
-                <form>
+                <form id="queryForm">
                     <div class="form-group">
-                        <input class="form-control form-control-lg" id="username" type="text" placeholder="請輸入帳號" autocomplete="off">
+                        <input class="form-control form-control-lg" id="UserID" name="UserID" type="text" placeholder="請輸入帳號" autocomplete="off">
                     </div>
                     <div class="form-group">
-                        <input class="form-control form-control-lg" id="password" type="password" placeholder="請輸入密碼">
+                        <input class="form-control form-control-lg" id="Password" name="Password" type="password" placeholder="請輸入密碼">
                     </div>
-                    <div class="form-group">
-                        <label class="custom-control custom-checkbox">
-                            <input class="custom-control-input" type="checkbox"><span class="custom-control-label">記住我</span>
-                        </label>
-                    </div>
-                    <button type="submit" class="btn btn-primary btn-lg btn-block">登入</button>
+                    @*<div class="form-group">
+                            <label class="custom-control custom-checkbox">
+                                <input class="custom-control-input" type="checkbox"><span class="custom-control-label">記住我</span>
+                            </label>
+                        </div>*@
+                    <button type="button" class="btn btn-primary btn-lg btn-block" onclick="Login();">登入</button>
                 </form>
             </div>
             <div class="card-footerX bg-white p-0  ">
                 <div class="card-footer-itemX card-footer-item-bordered">
-                    <a href="registration.html" class="footer-link">創建帳號</a>
+                    <a href="@Url.Action("Index","UserRegitration")" class="footer-link">創建帳號</a>
                 </div>
                 <div class="card-footer-itemX card-footer-item-bordered">
                     <a href="#" class="footer-link">忘記密碼</a>
@@ -49,3 +49,38 @@
     </div>
 </div>
 <!-- /login page  -->
+
+@section scripts{
+    <script>
+
+        //確認登入
+        function Login() {
+            var formValues = $("#queryForm").serialize();
+
+            $.ajax({
+                url: '@Url.Action("LoginCheck", "Login")',
+                data: formValues,
+                type: 'post',
+                success: function (data) {
+                    if (data) {
+                        alert("登入成功!!");
+                        $("#NavUserName").text("#使用者名稱：" + data.UserName);
+                        $("#NavIdentity").text("#身分：" + data.Identity);
+                        $("#NavUserID").val(data.UserID);
+                    }
+                    else {
+                        alert("帳號或密碼錯誤!!");
+                    }
+                },
+                fail: function () {
+                    alert("帳號或密碼錯誤!!");
+                },
+                error: function () {
+                    alert("帳號或密碼錯誤!!");
+                }
+            });
+            return false;
+        }
+
+    </script>
+}

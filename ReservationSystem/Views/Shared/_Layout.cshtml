@@ -37,7 +37,6 @@
         </div>
     </div>
     <!-- /wrapper  -->
-
     <!-- Optional JavaScript -->
     <!-- jquery 3.3.1 -->
     <script src="~/Content/assets/vendor/jquery/jquery-3.3.1.min.js"></script>
@@ -52,12 +51,17 @@
     <!-- sparkline js -->
     <script src="~/Content/assets/vendor/charts/sparkline/jquery.sparkline.js"></script>
     <!-- morris js -->
-    <script src="~/Content/assets/vendor/charts/morris-bundle/raphael.min.js"></script>
-    <script src="~/Content/assets/vendor/charts/morris-bundle/morris.js"></script>
+    @*<script src="~/Content/assets/vendor/charts/morris-bundle/raphael.min.js"></script>
+    <script src="~/Content/assets/vendor/charts/morris-bundle/morris.js"></script>*@
     <!-- chart c3 js -->
-    <script src="~/Content/assets/vendor/charts/c3charts/c3.min.js"></script>
+    @*<script src="~/Content/assets/vendor/charts/c3charts/c3.min.js"></script>
     <script src="~/Content/assets/vendor/charts/c3charts/d3-5.4.0.min.js"></script>
     <script src="~/Content/assets/vendor/charts/c3charts/C3chartjs.js"></script>
-    <script src="~/Content/assets/libs/js/dashboard-ecommerce.js"></script>
+    <script src="~/Content/assets/libs/js/dashboard-ecommerce.js"></script>*@
+    <!-- datepicker JavaScript -->
+    <script src="~/Content/assets/vendor/datepicker/moment.js"></script>
+    <script src="~/Content/assets/vendor/datepicker/tempusdominus-bootstrap-4.js"></script>
+    <script src="~/Content/assets/vendor/datepicker/datepicker.js"></script>
+    @RenderSection("scripts", required: false)
 </body>
 </html>

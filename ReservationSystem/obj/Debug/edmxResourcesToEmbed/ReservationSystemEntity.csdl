@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ReservationDatabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="ReservationDatabaseEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="MeetingRoom" EntityType="ReservationDatabaseModel.MeetingRoom" />
+    <EntitySet Name="Reservation" EntityType="ReservationDatabaseModel.Reservation" />
+    <EntitySet Name="User" EntityType="ReservationDatabaseModel.User" />
+  </EntityContainer>
+  <EntityType Name="MeetingRoom">
+    <Key>
+      <PropertyRef Name="Name" />
+    </Key>
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Position" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="LoadNumber" Type="Int32" Nullable="false" />
+    <Property Name="Status" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+    <Property Name="Information" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+    <Property Name="Equipment" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+    <Property Name="UpdateTime" Type="DateTime" Nullable="false" Precision="3" />
+  </EntityType>
+  <EntityType Name="Reservation">
+    <Key>
+      <PropertyRef Name="RoomName" />
+      <PropertyRef Name="StartTime" />
+    </Key>
+    <Property Name="ReservingPersonID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="RoomName" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="StartTime" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="EndTime" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="PeopleNumber" Type="Int32" Nullable="false" />
+    <Property Name="Goal" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+    <Property Name="Equipments" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+    <Property Name="SubmitTime" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="UserID" />
+    </Key>
+    <Property Name="UserName" Type="String" Nullable="false" MaxLength="20" FixedLength="true" Unicode="true" />
+    <Property Name="Identity" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="UserID" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Password" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Authority" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="FirstName" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+    <Property Name="LastName" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+    <Property Name="Department" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="IDNumber" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="Email" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
+    <Property Name="UpdateTime" Type="DateTime" Nullable="false" Precision="3" />
+  </EntityType>
+</Schema>

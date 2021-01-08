@@ -14,20 +14,12 @@ namespace Meeting_room_dating
     
     public partial class MeetingRoom
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public MeetingRoom()
-        {
-            this.Reservations = new HashSet<Reservation>();
-        }
-    
         public string Name { get; set; }
         public string Position { get; set; }
-        public Nullable<int> LoadNumber { get; set; }
+        public int LoadNumber { get; set; }
         public string Status { get; set; }
         public string Information { get; set; }
         public string Equipment { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Reservation> Reservations { get; set; }
+        public System.DateTime UpdateTime { get; set; }
     }
 }

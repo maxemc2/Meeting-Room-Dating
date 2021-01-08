@@ -18,11 +18,9 @@ namespace Meeting_room_dating
         public string RoomName { get; set; }
         public System.DateTime StartTime { get; set; }
         public System.DateTime EndTime { get; set; }
-        public Nullable<int> Number { get; set; }
+        public int PeopleNumber { get; set; }
         public string Goal { get; set; }
         public string Equipments { get; set; }
-    
-        public virtual MeetingRoom MeetingRoom { get; set; }
-        public virtual User User { get; set; }
+        public Nullable<System.DateTime> SubmitTime { get; set; }
     }
 }

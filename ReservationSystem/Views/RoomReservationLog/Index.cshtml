@@ -52,7 +52,7 @@
     </div>
 </div>
 <!-- /influencer profile  -->
-<!-- widgets   -->->
+<!-- widgets   -->
 <div class="row">
     <!-- total views   -->
     <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
@@ -93,37 +93,227 @@
             <h3 class="section-title">借用紀錄</h3>
         </div>
         <div class="card">
+            <form id="queryForm" class="needs-validation mx-4">
+                <div class="form-group row">
+                    <label for="RoomName" class="col-md-1 col-sm-1 col-xs-12 my-2">預約地點</label>
+                    <div class="col-md-3 col-sm-3 col-xs-12 mb-3">
+                        <select class="form-control" id="RoomName" name="RoomName" required="">
+                            <optgroup label="RA-1">
+                                <option>RA-101</option>
+                                <option>RA-102</option>
+                                <option>RA-103</option>
+                                <option>RA-104</option>
+                            </optgroup>
+                            <optgroup label="RA-2">
+                                <option>RA-201</option>
+                                <option>RA-202</option>
+                            </optgroup>
+                        </select>
+                    </div>
+                    <label for="MeetingDate" class="col-md-1 col-sm-1 col-xs-12 my-2">預約日期</label>
+                    <div class="col-md-3 col-sm-3 col-xs-12 mb-3">
+                        <input type="date" class="form-control datetimepicker-input" id="MeetingDate" name="MeetingDate" required="" />
+                    </div>
+                    <div class="col-md-1 col-sm-1 col-xs-12">
+                        <button type="button" class="btn btn-primary" onclick="GetObjList();">查詢</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="card">
             <div class="campaign-table table-responsive">
                 <table class="table">
                     <thead>
                         <tr class="border-0">
-                            <th class="border-0">會議室地點</th>
+                            <th class="border-0">會議室名稱</th>
+                            <th class="border-0">借用日期</th>
                             <th class="border-0">借用時段</th>
                             <th class="border-0">會議人數</th>
-                            <th class="border-0">狀態</th>
+                            <th class="border-0">目的</th>
                             <th class="border-0">申請時間</th>
+                            <th class="border-0">修改預約</th>
+                            <th class="border-0">刪除預約</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td>RA-101</td>
-                            <td>00:00-24:00</td>
-                            <td>99</td>
-                            <td>預約中</td>
-                            <td>2022/01/01 00:00</td>
-                        </tr>
-                        <tr>
-                            <td>RA-102</td>
-                            <td>00:00-24:00</td>
-                            <td>99</td>
-                            <td>已結束</td>
-                            <td>2020/01/01 00:00</td>
-                        </tr>
-                    </tbody>
-                </table>
+                    <tbody class="objList"></tbody>                    
+                </table>                
             </div>
         </div>
     </div>
     <!-- /room log -->
 </div>
 <!-- end content  -->
+
+<div id="updateModal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div id="updateCard" class="modal-body card"></div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        // 給input  date設定預設值
+        var now = new Date();
+        //格式化日，如果小於9，前面補0
+        var day = ("0" + now.getDate()).slice(-2);
+        //格式化月，如果小於9，前面補0
+        var month = ("0" + (now.getMonth() + 1)).slice(-2);
+        //拼裝完整日期格式
+        var today = now.getFullYear() + "-" + (month) + "-" + (day);
+        //完成賦值
+        $('#MeetingDate').val(today);
+
+        function Check(){
+            console.log($("#updateForm").serialize());
+            $("#updateModal").modal('hide');
+        }
+
+        //取得預約清單
+        function GetObjList() {
+            var formValues = $("#queryForm").serialize();
+
+            $.ajax({
+                url: '@Url.Action("ObjListPartialView", "RoomReservationLog")',
+                data: formValues + "&StartTime=" + $('#MeetingDate').val(),
+                type: 'post',
+                success: function (data) {
+                    $(".objList").html(data);
+                },
+                fail: function () {
+                    alert("無預約!!");
+                },
+                error: function () {
+                    alert("無預約!!");
+                }
+            });
+        }
+
+        //刪除預約確認
+        function DeleteCheck(RoomName, StartTime, EndTime) {
+            $.ajax({
+                url: '@Url.Action("CheckObjExist", "RoomReservationLog")',
+                data: "RoomName=" + RoomName + "&StartTime=" + StartTime + "&EndTime=" + EndTime,
+                type: 'post',
+                success: function (data) {
+                    if (data) {
+                        var confirmWord = "是否刪除 " + RoomName + " 預約?";
+                        if (confirm(confirmWord)) {
+                            DeleteObj(RoomName, StartTime, EndTime);
+                        }
+                    }
+                    else {
+                        alert("無法刪除該預約!!");
+                    }
+                },
+                fail: function () {
+                    alert("刪除預約錯誤!!");
+                },
+                error: function () {
+                    alert("刪除預約錯誤!!");
+                }
+            });
+            return false;
+        }
+
+        //刪除預約
+        function DeleteObj(RoomName, StartTime, EndTime) {
+            var confirmWord = "是否刪除 " + RoomName + " 預約?";
+            var nowTime = new Date(); //當前時間
+
+            if (!confirm(confirmWord)) {
+                return false;
+            }
+
+            if(new Date(StartTime) <= nowTime || new Date(EndTime) <= nowTime)
+            {
+                alert("無法刪除過往預約!!");
+                return false;
+            }
+
+            $.ajax({
+                url: '@Url.Action("DeleteObj", "RoomReservationLog")',
+                data: "RoomName=" + RoomName + "&StartTime=" + StartTime + "&EndTime=" + EndTime,
+                type: 'post',
+                success: function (data) {
+                    if (data) {
+                        GetObjList();
+                        alert("刪除預約成功!!");
+                    }
+                    else {
+                        alert("刪除預約失敗!!");
+                    }
+                },
+                error: function () {
+                    alert("刪除預約失敗!!");
+                },
+                fail: function () {
+                    alert("刪除預約失敗!!");
+                }
+            });
+        }
+
+        //修改預約表單
+        function GetUpdateObj(RoomName, StartTime, EndTime) {
+            var nowTime = new Date(); //當前時間
+
+            //if(new Date(StartTime) <= nowTime || new Date(EndTime) <= nowTime)
+            //{
+            //    alert("無法修改過往預約!!");
+            //    return false;
+            //}
+
+            $.ajax({
+                url: '@Url.Action("UpdateObjPartialView", "RoomReservationLog")',
+                data: "RoomName=" + RoomName + "&StartTime=" + StartTime + "&EndTime=" + EndTime,
+                type: 'post',
+                success: function (data) {
+                    if (data) {
+                        $("#updateCard").html(data);
+                        $('#updateModal').modal({
+                            backdrop: 'static', keyboard: false
+                        });
+                    }
+                    else {
+                        alert("開啟修改預約視窗失敗!!");
+                    }
+                },
+                error: function () {
+                    alert("開啟修改預約視窗失敗!!");
+                },
+                fail: function () {
+                    alert("開啟修改預約視窗失敗!!");
+                }
+            });
+        }
+
+        //預約明細
+        function UpdateObj() {
+            var formValues = $("#queryForm").serialize();
+            var strDate = $('#MeetingDate').val();
+
+            $.ajax({
+                url: '@Url.Action("InsertObj", "RoomReservation")',
+                data: formValues + '&StartTime=' + StartTime + '&EndTime=' + EndTime + '&ReservingPersonID=' + $("#NavUserID").val(),
+                type: 'post',
+                success: function (data) {
+                    if (data) {
+                        $("#updateModal").modal('hide');
+                        alert("修改預約成功!!");
+                    }
+                    else {
+                        alert("修改預約失敗!!");
+                    }
+                },
+                error: function () {
+                    alert("修改預約失敗!!");
+                },
+                fail: function () {
+                    alert("修改預約失敗!!");
+                }
+            });
+            return false;
+        }
+    </script>
+}

@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ReservationDatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="MeetingRoom">
+    <Key>
+      <PropertyRef Name="Name" />
+    </Key>
+    <Property Name="Name" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="Position" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="LoadNumber" Type="int" Nullable="false" />
+    <Property Name="Status" Type="nchar" MaxLength="20" />
+    <Property Name="Information" Type="nchar" MaxLength="100" />
+    <Property Name="Equipment" Type="nchar" MaxLength="50" />
+    <Property Name="UpdateTime" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Reservation">
+    <Key>
+      <PropertyRef Name="RoomName" />
+      <PropertyRef Name="StartTime" />
+    </Key>
+    <Property Name="ReservingPersonID" Type="varchar" MaxLength="20" />
+    <Property Name="RoomName" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="StartTime" Type="datetime" Nullable="false" />
+    <Property Name="EndTime" Type="datetime" Nullable="false" />
+    <Property Name="PeopleNumber" Type="int" Nullable="false" />
+    <Property Name="Goal" Type="nchar" MaxLength="100" />
+    <Property Name="Equipments" Type="nchar" MaxLength="50" />
+    <Property Name="SubmitTime" Type="datetime" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="UserID" />
+    </Key>
+    <Property Name="UserName" Type="nchar" MaxLength="20" Nullable="false" />
+    <Property Name="Identity" Type="varchar" MaxLength="20" />
+    <Property Name="UserID" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="Password" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="Authority" Type="varchar" MaxLength="10" />
+    <Property Name="FirstName" Type="nchar" MaxLength="15" />
+    <Property Name="LastName" Type="nchar" MaxLength="15" />
+    <Property Name="Department" Type="nchar" MaxLength="10" />
+    <Property Name="IDNumber" Type="nchar" MaxLength="10" Nullable="false" />
+    <Property Name="Email" Type="nchar" MaxLength="30" />
+    <Property Name="UpdateTime" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityContainer Name="ReservationDatabaseModelStoreContainer">
+    <EntitySet Name="MeetingRoom" EntityType="Self.MeetingRoom" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Reservation" EntityType="Self.Reservation" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+  </EntityContainer>
+</Schema>

@@ -22,9 +22,9 @@ jQuery(document).ready(function($) {
     }
 
 
-    if ($("#datetimepicker3").length) {
+    if ($(".timepicker").length) {
 
-        $('#datetimepicker3').datetimepicker({
+        $(".timepicker").datetimepicker({
             format: 'LT'
         });
     }

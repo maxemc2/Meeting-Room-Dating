@@ -2,6 +2,7 @@
 using Meeting_room_dating.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Web;
@@ -17,12 +18,12 @@ namespace Meeting_room_dating.Services
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public List<Reservation> SearchObjList(RoomSearchingViewModel model)
+        public List<Reservation> SearchObjList(ReservationViewModel model)
         {
             try
             {
                 //主表單
-                var mainObj = from o in _db.Reservations
+                var mainObj = from o in _db.Reservation
                               select o;
 
                 #region 查詢條件
@@ -35,9 +36,9 @@ namespace Meeting_room_dating.Services
                 {
                     mainObj = mainObj.Where(o => o.RoomName == model.RoomName);
                 }
-                if (model.RservationTime != null && model.RservationTime != new DateTime())
+                if (!string.IsNullOrEmpty(model.StartTime.ToString()))
                 {
-                    mainObj = mainObj.Where(o => o.StartTime.Date == model.RservationTime.Date);
+                    mainObj = mainObj.Where(o => DbFunctions.DiffDays(o.StartTime, model.StartTime) == 0);
                 }
 
                 #endregion
@@ -57,13 +58,13 @@ namespace Meeting_room_dating.Services
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public Reservation SearchObj(RoomSearchingViewModel model)
+        public Reservation SearchObj(ReservationViewModel model)
         {
             try
             {
-                var obj = (from o in _db.Reservations
-                              where o.ReservingPersonID == model.ReservingPersonID && o.RoomName == model.RoomName && o.StartTime == model.RservationTime
-                              select o).FirstOrDefault();
+                var obj = (from o in _db.Reservation
+                           where o.RoomName == model.RoomName && o.StartTime == model.StartTime && o.EndTime == model.EndTime
+                           select o).FirstOrDefault();
 
                 return obj;
             }
@@ -82,7 +83,8 @@ namespace Meeting_room_dating.Services
         {
             try
             {
-                _db.Reservations.AddOrUpdate(model);
+                model.SubmitTime = DateTime.Now;
+                _db.Reservation.AddOrUpdate(model);
                 _db.SaveChanges();
 
                 return true;
@@ -98,14 +100,12 @@ namespace Meeting_room_dating.Services
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public bool DeleteDetailObj(RoomSearchingViewModel model)
+        public bool DeleteObj(ReservationViewModel model)
         {
             try
             {
-                if (CheckObjStatus(model))
-                {
-                    _db.Reservations.RemoveRange(_db.Reservations.Where(o => o.ReservingPersonID == model.ReservingPersonID && o.RoomName == model.RoomName && o.StartTime == model.RservationTime));
-                }
+                _db.Reservation.Remove(_db.Reservation.First(o => o.RoomName == model.RoomName && o.StartTime == model.StartTime && o.EndTime == model.EndTime));
+                
                 _db.SaveChanges();
 
                 return true;
@@ -117,16 +117,54 @@ namespace Meeting_room_dating.Services
         }
 
         /// <summary>
-        /// 確認是否存在
+        /// 確認預約存在
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public bool CheckObjStatus(RoomSearchingViewModel model)
+        public bool CheckObjExist(ReservationViewModel model)
         {
             try
             {
+                var obj = SearchObj(model);
+
+                if(obj != null)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+                
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// 確認預約是否衝突
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        public bool CheckObjConflict(ReservationViewModel model)
+        {
+            try
+            {
+                var mainObj = from o in _db.Reservation
+                              select o;
+
+                #region 查詢條件
+
+                if (!string.IsNullOrEmpty(model.RoomName))
+                {
+                    mainObj = mainObj.Where(o => o.RoomName == model.RoomName);
+                }
+
+                #endregion
                 //判斷是否有資料
-                if (!_db.Reservations.Any(o => o.ReservingPersonID == model.ReservingPersonID && o.RoomName == model.RoomName && o.StartTime == model.RservationTime))
+                if (!_db.Reservation.Any(o => o.StartTime <= model.StartTime && o.EndTime >= model.EndTime))
                 {
                     //DB沒有資料
                     return false;

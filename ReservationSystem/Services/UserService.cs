@@ -13,31 +13,31 @@ namespace Meeting_room_dating.Services
         ReservationDatabaseEntities _db = new ReservationDatabaseEntities();
 
         /// <summary>
-        /// 查詢使用者整體清單
+        /// 查詢使用者清單
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public List<Reservation> SearchObjList(RoomSearchingViewModel model)
+        public List<User> SearchObjList(UserViewModel model)
         {
             try
             {
                 //主表單
-                var mainObj = from o in _db.Reservations
+                var mainObj = from o in _db.User
                               select o;
 
                 #region 查詢條件
 
-                if (!string.IsNullOrEmpty(model.ReservingPersonID))
+                if (!string.IsNullOrEmpty(model.UserName))
                 {
-                    mainObj = mainObj.Where(o => o.ReservingPersonID == model.ReservingPersonID);
+                    mainObj = mainObj.Where(o => o.UserName == model.UserName);
                 }
-                if (!string.IsNullOrEmpty(model.RoomName))
+                if (!string.IsNullOrEmpty(model.Identity))
                 {
-                    mainObj = mainObj.Where(o => o.RoomName == model.RoomName);
+                    mainObj = mainObj.Where(o => o.Identity == model.Identity);
                 }
-                if (model.RservationTime != null && model.RservationTime != new DateTime())
+                if (!string.IsNullOrEmpty(model.Authority))
                 {
-                    mainObj = mainObj.Where(o => o.StartTime.Date == model.RservationTime.Date);
+                    mainObj = mainObj.Where(o => o.Authority == model.Authority);
                 }
 
                 #endregion
@@ -48,7 +48,7 @@ namespace Meeting_room_dating.Services
             }
             catch (Exception ex)
             {
-                return new List<Reservation>();
+                return new List<User>();
             }
         }
 
@@ -57,12 +57,12 @@ namespace Meeting_room_dating.Services
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public Reservation SearchObj(RoomSearchingViewModel model)
+        public User SearchObj(UserViewModel model)
         {
             try
             {
-                var obj = (from o in _db.Reservations
-                           where o.ReservingPersonID == model.ReservingPersonID && o.RoomName == model.RoomName && o.StartTime == model.RservationTime
+                var obj = (from o in _db.User
+                           where o.UserID == model.UserID
                            select o).FirstOrDefault();
 
                 return obj;
@@ -78,11 +78,16 @@ namespace Meeting_room_dating.Services
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public bool AddOrUpdateObj(Reservation model)
+        public bool AddOrUpdateObj(User model)
         {
             try
             {
-                _db.Reservations.AddOrUpdate(model);
+                model.UpdateTime = DateTime.Now;
+                if(model.Authority == null)
+                {
+                    model.Authority = "Normal";
+                }
+                _db.User.AddOrUpdate(model);
                 _db.SaveChanges();
 
                 return true;
@@ -98,13 +103,13 @@ namespace Meeting_room_dating.Services
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public bool DeleteDetailObj(RoomSearchingViewModel model)
+        public bool DeleteObj(UserViewModel model)
         {
             try
             {
                 if (CheckObjStatus(model))
                 {
-                    _db.Reservations.RemoveRange(_db.Reservations.Where(o => o.ReservingPersonID == model.ReservingPersonID && o.RoomName == model.RoomName && o.StartTime == model.RservationTime));
+                    _db.User.RemoveRange(_db.User.Where(o => o.UserID == model.UserID));
                 }
                 _db.SaveChanges();
 
@@ -117,16 +122,16 @@ namespace Meeting_room_dating.Services
         }
 
         /// <summary>
-        /// 確認是否存在
+        /// 確認帳號是否存在
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public bool CheckObjStatus(RoomSearchingViewModel model)
+        public bool CheckObjStatus(UserViewModel model)
         {
             try
             {
                 //判斷是否有資料
-                if (!_db.Reservations.Any(o => o.ReservingPersonID == model.ReservingPersonID && o.RoomName == model.RoomName && o.StartTime == model.RservationTime))
+                if (!_db.User.Any(o => o.UserID == model.UserID))
                 {
                     //DB沒有資料
                     return false;
@@ -137,6 +142,30 @@ namespace Meeting_room_dating.Services
             catch (Exception ex)
             {
                 return false;
+            }
+        }
+
+        /// <summary>
+        /// 確認帳號密碼一致
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        public User LoginCheck(UserViewModel model)
+        {
+            try
+            {
+                //判斷是否有資料
+                if (!_db.User.Any(o => o.UserID == model.UserID && o.Password == model.Password))
+                {
+                    //DB沒有資料
+                    return new User();
+                }
+
+                return _db.User.FirstOrDefault(o => o.UserID == model.UserID && o.Password == model.Password);
+            }
+            catch (Exception ex)
+            {
+                return new User();
             }
         }
     }
