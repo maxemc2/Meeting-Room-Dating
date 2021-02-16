@@ -63,7 +63,7 @@ namespace Meeting_room_dating.Services
             try
             {
                 var obj = (from o in _db.Reservation
-                           where o.RoomName == model.RoomName && o.StartTime == model.StartTime && o.EndTime == model.EndTime
+                           where o.RoomName == model.RoomName && o.StartTime == model.StartTime
                            select o).FirstOrDefault();
 
                 return obj;
