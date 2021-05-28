@@ -1,61 +1,8 @@
-Software Design Document
-
-for
-
-學校會議室預約系統
-
+Software Design Document for 學校會議室預約系統
 (Virtual Room Reservation Assistant)
 
-Group15
-
 Prepared by:
-
 B10730017 資工三甲 鄭驊成
-
-# 
-
-[**1. INTRODUCTION**](#_a5sh38nt3h4w) **3**
-
->   [1.1  Purpose](#_5lh87l1vbwgp) 3
-
->   [1.2  Scope](#_gin4gflidooa) 3
-
->   [1.3  Overview](#_jrx0h2f7ly1k) 3
-
->   [1.5  Definitions and Acronyms](#_buyz9gewkefd) 3
-
-[**2. SYSTEM OVERVIEW**](#_figfjuwbgzmr) **4**
-
-[**3. SYSTEM ARCHITECTURE**](#_4xwj0t4staup) **4**
-
->   [3.1  Architectural Design](#_bm7lu7af5933) 4
-
->   [3.2  Decomposition Description](#_805jdbvsv58s) 6
-
->   [3.3  Design Rationale](#_asfdpdgjts0r) 6
-
-[**4. DATA DESIGN**](#_u0thkhomrsa) **7**
-
->   [4.1  Data Description](#_xfrqxqyk12lk) 7
-
->   [4.2  Data Dictionary](#_ekk76s9xijnq) 8
-
-[**5. COMPONENT DESIGN**](#_k9adrhagf3n6) **9**
-
-[**6. HUMAN INTERFACE DESIGN**](#_555n3uw8oymh) **10**
-
->   [6.1  Overview of User Interface](#_rn06l2egso3m) 10
-
->   [6.2  Screen Images](#_to7257xlfcx4) 11
-
->   [6.3  Screen Objects and Actions](#_jefgilwxn0ab) 14
-
-[**7. REQUIREMENTS MATRIX**](#_g1p1gtsi8jlm) **16**
-
-[**8. APPENDICES**](#_ln7ykn56qhb4) **17**
-
-#   
-
 
 # 1. INTRODUCTION 
 
